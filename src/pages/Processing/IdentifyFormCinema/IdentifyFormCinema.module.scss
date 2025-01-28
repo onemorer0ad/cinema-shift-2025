@@ -1,0 +1,55 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.form input[type='text'],
+.form input[type='email'],
+.form input[type='password'],
+.form input[type='tel'] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cae5ff;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+.form input[type='text']::placeholder,
+.form input[type='email']::placeholder,
+.form input[type='password']::placeholder,
+.form input[type='tel']::placeholder {
+  color: #666;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+}
+
+.button {
+  padding: 12px 24px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.button[type='submit'] {
+  background-color: #8b3dff;
+  color: white;
+  border: none;
+}
+
+.button[type='button'] {
+  background-color: transparent;
+  border: 1px solid #ccc;
+  color: #333;
+}

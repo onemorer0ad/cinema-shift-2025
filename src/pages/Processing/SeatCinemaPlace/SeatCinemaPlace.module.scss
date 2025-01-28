@@ -1,0 +1,107 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.step {
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.screen {
+  background-color: #f0f0f0;
+  text-align: center;
+  padding: 15px;
+  margin-bottom: 30px;
+}
+
+.priceInfo {
+  margin-bottom: 20px;
+}
+
+.price {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.seatsContainer {
+  margin: 30px 0;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.rowNumber {
+  margin-right: 15px;
+  width: 20px;
+}
+
+.seat {
+  width: 30px;
+  height: 30px;
+  margin: 0 5px;
+  border: none;
+  background-color: #8a2be2;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.seat:hover {
+  opacity: 0.8;
+}
+
+.seat.selected {
+  background-color: #4a148c;
+}
+
+.info {
+  margin: 30px 0;
+}
+
+.legend {
+  color: #333;
+}
+
+.blueText {
+  color: #0000ff;
+}
+
+.dateTime,
+.seatInfo,
+.total {
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.actions {
+  display: flex;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.backButton,
+.buyButton {
+  padding: 10px 30px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.backButton {
+  background-color: #f0f0f0;
+}
+
+.buyButton {
+  background-color: #8a2be2;
+  color: white;
+}
