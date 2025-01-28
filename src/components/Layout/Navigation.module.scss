@@ -1,0 +1,45 @@
+.navigation {
+  display: flex;
+  align-items: center;
+  padding: 22px 240px;
+  gap: 32px;
+  background-color: $BGPrimary;
+  margin: 0 auto;
+  border-bottom: 1px solid #ced2da;
+
+  img {
+    height: 40px;
+    object-fit: contain;
+  }
+
+  &_item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+}
+
+.content {
+  padding: 2rem;
+}
+
+/* Project=Cinema, Enter=On */
+@media screen and (max-width: 768px) {
+  .navigation {
+    padding: 12px 50px;
+    z-index: 100;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    gap: 0;
+    justify-content: space-between;
+    box-sizing: border-box;
+
+    &_item {
+      flex-direction: column;
+    }
+    &_item:first-child {
+      display: none;
+    }
+  }
+}
