@@ -1,0 +1,67 @@
+/* src/pages/Processing/PaymentForm/PaymentForm.module.scss */
+
+.paymentForm {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.formGroup {
+  margin-bottom: 15px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.backButton {
+  padding: 10px 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  background-color: #ffffff;
+  color: #000;
+  cursor: pointer;
+}
+
+.payButton {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #6c63ff; /* Фиолетовый цвет */
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.backButton:hover {
+  background-color: #f0f0f0;
+}
+
+.payButton:hover {
+  background-color: #5a54e0; /* Темнее фиолетового при наведении */
+}

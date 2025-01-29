@@ -13,7 +13,7 @@ interface SharedDataProps {
   }[];
 }
 
-interface FormDataProps {
+export interface FormDataProps {
   firstName: string;
   lastName: string;
   phone: number;

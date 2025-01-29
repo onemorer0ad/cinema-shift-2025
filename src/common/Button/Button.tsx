@@ -4,14 +4,20 @@ import styles from './Button.module.scss';
 
 interface ButtonProps extends ComponentProps<'button'> {
   variant?: 'contained';
+  type?: 'submit' | 'button';
 }
 
-const Button = ({ children, variant = 'contained', ...props }: ButtonProps) => {
+const Button = ({
+  children,
+  type = 'button',
+  variant = 'contained',
+  ...props
+}: ButtonProps) => {
   return (
     <button
       {...props}
       className={clsx(styles.button, variant && styles[variant])}
-      type="button"
+      type={type}
     >
       {children}
     </button>
