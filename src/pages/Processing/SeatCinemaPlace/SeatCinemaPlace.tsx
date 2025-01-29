@@ -5,30 +5,52 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { AppContext } from '@utils/contexts';
 import Tooltip from '@common/Tooltip/Tooltip';
 
-const SeatCinemaPlace: React.FC = () => {
-  const [selectedSeat, setSelectedSeat] = useState();
+const SeatCinemaPlace = () => {
+  const [selectedSeats, setSelectedSeats] = useState<
+    Array<{ price: number; id: number; seatId: number }>
+  >([]);
   const { sharedData, setSharedData } = useContext(AppContext);
   const navigate = useNavigate();
   const { filmId } = useParams();
 
+  console.log(sharedData);
+
   const handleSeatClick = ({ price, id, seatId }) => {
-    setSelectedSeat({ price, id, seatId });
+    setSelectedSeats((prevSeats) => {
+      const seatIndex = prevSeats.findIndex(
+        (seat) => seat.id === id && seat.seatId === seatId
+      );
+
+      if (seatIndex !== -1) {
+        // Если место уже выбрано, удаляем его
+        return prevSeats.filter((_, index) => index !== seatIndex);
+      } else {
+        // Если место не выбрано, добавляем его
+        return [...prevSeats, { price, id, seatId }];
+      }
+    });
   };
 
-  console.log(selectedSeat);
+  const handleBuyClick = () => {
+    setSharedData({ ...sharedData, selectedSeats });
+    navigate(`/processing/identify/${filmId}`);
+  };
+
+  const hallName = sharedData.selectedHallAndTime.hall.name;
+  const hallTypesObject = {
+    Red: 'Красный',
+    Green: 'Зеленый',
+    Blue: 'Синий',
+  };
+
+  console.log(selectedSeats);
+
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Выбор места</h1>
       <div className={styles.step}>Шаг 1 из 3</div>
 
       <div className={styles.screen}>Экран</div>
-
-      <div className={styles.priceInfo}>
-        <span className={styles.price}>{selectedSeat?.price}</span>
-        <span className={styles.seatType}>
-          {selectedSeat?.id} ряд, {selectedSeat?.seatId} место
-        </span>
-      </div>
 
       <div className={styles.seatsContainer}>
         {sharedData?.selectedHallAndTime.hall.places.map((place, id) => {
@@ -52,6 +74,13 @@ const SeatCinemaPlace: React.FC = () => {
                       }
                       className={`${styles.seat} ${
                         seatElement.type == 'BLOCKED' ? styles.blocked : ''
+                      } ${
+                        selectedSeats.some(
+                          (seat) =>
+                            seat.id === id + 1 && seat.seatId === seatId + 1
+                        )
+                          ? styles.selected
+                          : ''
                       }`}
                       onClick={() =>
                         handleSeatClick({
@@ -71,7 +100,7 @@ const SeatCinemaPlace: React.FC = () => {
 
       <div className={styles.info}>
         <div className={styles.legend}>
-          <span className={styles.blueText}>Синий</span>
+          <span>{hallTypesObject[hallName]}</span>
           <div className={styles.dateTime}>
             <span>Дата и время:</span>
             <span>
@@ -80,20 +109,25 @@ const SeatCinemaPlace: React.FC = () => {
           </div>
           <div className={styles.seatInfo}>
             <span>Места:</span>
-            <span>2 ряд - 8, 9</span>
+            <span>
+              {selectedSeats
+                .sort((a, b) => a.id - b.id || a.seatId - b.seatId)
+                .map((seat) => `${seat.id} ряд - ${seat.seatId}`)
+                .join(', ')}
+            </span>
           </div>
           <div className={styles.total}>
             <span>Сумма:</span>
-            <span>500 ₽</span>
+            <span>
+              {selectedSeats.reduce((sum, seat) => sum + seat.price, 0)} ₽
+            </span>
           </div>
         </div>
       </div>
 
       <div className={styles.actions}>
         <Button onClick={() => navigate(`/film/${filmId}`)}>Назад</Button>
-        <Button onClick={() => navigate(`/processing/identify/${filmId}`)}>
-          Купить
-        </Button>
+        <Button onClick={handleBuyClick}>Купить</Button>
       </div>
     </div>
   );
