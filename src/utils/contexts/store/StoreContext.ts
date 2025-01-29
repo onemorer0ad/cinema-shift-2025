@@ -1,4 +1,16 @@
 import { createContext } from 'react';
 
-export const StoreContext = createContext(1);
-console.log(StoreContext);
+interface AppContextType {
+  sharedData: SharedDataProps; // замените any на конкретный тип ваших данных
+  setSharedData: (data: any) => void;
+}
+
+interface SharedDataProps {
+  seanceInfo?: {
+    seanceDate: string;
+    seanceTime: string;
+    hallName: string;
+  };
+}
+
+export const AppContext = createContext<AppContextType | undefined>(undefined);

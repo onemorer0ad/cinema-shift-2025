@@ -1,20 +1,21 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styles from './SeatCinemaPlace.module.scss';
+import Button from '@common/Button/Button';
+import { useNavigate, useParams } from 'react-router-dom';
+import { AppContext } from '@utils/contexts';
+import Tooltip from '@common/Tooltip/Tooltip';
 
 const SeatCinemaPlace: React.FC = () => {
-  const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
+  const [selectedSeat, setSelectedSeat] = useState();
+  const { sharedData, setSharedData } = useContext(AppContext);
+  const navigate = useNavigate();
+  const { filmId } = useParams();
 
-  const rows = 6;
-  const seatsPerRow = 10;
-
-  const handleSeatClick = (seatId: string) => {
-    if (selectedSeats.includes(seatId)) {
-      setSelectedSeats(selectedSeats.filter((seat) => seat !== seatId));
-    } else {
-      setSelectedSeats([...selectedSeats, seatId]);
-    }
+  const handleSeatClick = ({ price, id, seatId }) => {
+    setSelectedSeat({ price, id, seatId });
   };
 
+  console.log(selectedSeat);
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Выбор места</h1>
@@ -23,28 +24,49 @@ const SeatCinemaPlace: React.FC = () => {
       <div className={styles.screen}>Экран</div>
 
       <div className={styles.priceInfo}>
-        <span className={styles.price}>300 ₽</span>
-        <span className={styles.seatType}>1 ряд, 5 место</span>
+        <span className={styles.price}>{selectedSeat?.price}</span>
+        <span className={styles.seatType}>
+          {selectedSeat?.id} ряд, {selectedSeat?.seatId} место
+        </span>
       </div>
 
       <div className={styles.seatsContainer}>
-        {Array.from({ length: rows }).map((_, rowIndex) => (
-          <div key={rowIndex} className={styles.row}>
-            <span className={styles.rowNumber}>{rowIndex + 1}</span>
-            {Array.from({ length: seatsPerRow }).map((_, seatIndex) => {
-              const seatId = `${rowIndex + 1}-${seatIndex + 1}`;
-              return (
-                <button
-                  key={seatId}
-                  className={`${styles.seat} ${
-                    selectedSeats.includes(seatId) ? styles.selected : ''
-                  }`}
-                  onClick={() => handleSeatClick(seatId)}
-                />
-              );
-            })}
-          </div>
-        ))}
+        {sharedData?.selectedHallAndTime.hall.places.map((place, id) => {
+          return (
+            <div key={id} className={styles.row}>
+              <span className={styles.rowNumber}>{id + 1}</span>
+              {place.map((seatElement, seatId) => {
+                // console.log(seatElement.price, id, seatId);
+                return (
+                  <Tooltip
+                    content={{
+                      price: seatElement.price,
+                      id: id + 1,
+                      seatId: seatId + 1,
+                    }}
+                    key={seatId}
+                  >
+                    <button
+                      disabled={
+                        seatElement.type == 'BLOCKED' ? true : undefined
+                      }
+                      className={`${styles.seat} ${
+                        seatElement.type == 'BLOCKED' ? styles.blocked : ''
+                      }`}
+                      onClick={() =>
+                        handleSeatClick({
+                          price: seatElement.price,
+                          id: id + 1,
+                          seatId: seatId + 1,
+                        })
+                      }
+                    />
+                  </Tooltip>
+                );
+              })}
+            </div>
+          );
+        })}
       </div>
 
       <div className={styles.info}>
@@ -52,7 +74,9 @@ const SeatCinemaPlace: React.FC = () => {
           <span className={styles.blueText}>Синий</span>
           <div className={styles.dateTime}>
             <span>Дата и время:</span>
-            <span>3 июля 13:45</span>
+            <span>
+              {sharedData.seanceDate} {sharedData.selectedHallAndTime.time}
+            </span>
           </div>
           <div className={styles.seatInfo}>
             <span>Места:</span>
@@ -66,8 +90,10 @@ const SeatCinemaPlace: React.FC = () => {
       </div>
 
       <div className={styles.actions}>
-        <button className={styles.backButton}>Назад</button>
-        <button className={styles.buyButton}>Купить</button>
+        <Button onClick={() => navigate(`/film/${filmId}`)}>Назад</Button>
+        <Button onClick={() => navigate(`/processing/identify/${filmId}`)}>
+          Купить
+        </Button>
       </div>
     </div>
   );
