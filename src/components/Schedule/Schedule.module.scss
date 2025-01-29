@@ -1,0 +1,81 @@
+.days_container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 8px;
+  margin-top: 25px;
+}
+
+.day_active {
+  background-color: $BGPrimary;
+}
+
+.day_date {
+  position: relative;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 10px;
+  margin-top: 4px;
+  text-align: center;
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%; // Начинаем с середины элемента
+    right: 0;
+    width: 1px; // Толщина границы
+    height: 50%; // Высота границы (половина высоты элемента)
+    background-color: $BorderLight; // Цвет границы
+    transform: translateY(-50%); // Центрируем по вертикали
+  }
+
+  &:hover {
+    background-color: $BGPrimary;
+  }
+
+  &:active {
+    background-color: $BGPrimary;
+  }
+}
+
+.schedule_dates {
+  display: flex;
+  background-color: $BGSecondary;
+
+  @media (max-width: 768px) {
+    overflow-x: auto;
+  }
+}
+
+.schedule_time {
+  display: flex;
+  flex-direction: column;
+}
+
+.hall_block {
+  margin-bottom: 20px;
+}
+
+.seances_list {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.seance_time {
+  padding: 5px 10px;
+  border-radius: 12px;
+  border: 1px solid grey;
+  background-color: $BGPrimary;
+  &:hover {
+    background-color: #97a1af;
+  }
+
+  &:active {
+    background-color: #97a1af;
+  }
+}
+
+.time_active {
+  background-color: #97a1af;
+}
