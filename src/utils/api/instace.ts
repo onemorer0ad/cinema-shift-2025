@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+export const BASE_URL = 'https://shift-intensive.ru/api/';
+
 export const api = axios.create({
-  baseURL: 'https://shift-intensive.ru/api/',
+  baseURL: BASE_URL,
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import s from './FilmPage.module.scss';
+import styles from './FilmPage.module.scss';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   useRequestFilmQuery,
@@ -7,11 +7,11 @@ import {
 } from '@utils/api/hooks';
 import Rating from '@common/Rating/Rating';
 import Schedule from '@components/Schedule/Schedule';
+import { BASE_URL } from '@utils/api/instace';
 
 const FilmPage = () => {
   const { filmId } = useParams();
   const navigate = useNavigate();
-  const BASE_URL = 'https://shift-intensive.ru/api'; // Базовый URL сервера
   if (!filmId) return;
   const {
     data: filmQueryData,
@@ -28,12 +28,12 @@ const FilmPage = () => {
   if (filmQueryLoading || scheduleQueryLoading) return <div>Loading...</div>;
 
   return (
-    <div className={s.container}>
+    <div className={styles.container}>
       <button onClick={() => navigate('/')}>Назад</button>
-      <div key={film.id} className={s.filmCard}>
-        <div className={s.imageContainer}>
+      <div key={film.id} className={styles.filmCard}>
+        <div className={styles.imageContainer}>
           <img src={`${BASE_URL}${film.img}`} alt={film.name} />
-          <div className={s.filmCard_info}>
+          <div className={styles.filmCard_info}>
             <ul>
               {film.genres.map((genre) => {
                 return <li key={genre}>{genre}</li>;
@@ -44,7 +44,7 @@ const FilmPage = () => {
             </p>
           </div>
         </div>
-        <div className={s.detailed_info}>
+        <div className={styles.detailed_info}>
           <h2>{film.name}</h2>
           <p>Фильм</p>
           <Rating rating={film.userRatings.kinopoisk} />

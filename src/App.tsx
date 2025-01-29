@@ -7,7 +7,7 @@ import FilmPage from '@pages/FilmPage/FilmPage';
 import SeatCinemaPlace from '@pages/Processing/SeatCinemaPlace/SeatCinemaPlace';
 import IdentifyFormCinema from '@pages/Processing/IdentifyFormCinema/IdentifyFormCinema';
 
-const App: React.FC = () => {
+const App = () => {
   return (
     <BrowserRouter>
       <Navigation />

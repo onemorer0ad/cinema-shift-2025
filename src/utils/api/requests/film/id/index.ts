@@ -7,5 +7,5 @@ interface RequestFilmParams {
 }
 
 export const requestFilm = ({ params, config }: RequestFilmParams) => {
-  return api.get(`cinema/film/${params.id}`, { ...config });
+  return api.get(`cinema/film/${params.id}`, config);
 };

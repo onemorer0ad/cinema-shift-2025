@@ -24,7 +24,6 @@
       "@features/*": ["./features/*"],
       "@assets/*": ["./assets/*"],
       "@utils/api": ["./utils/api"],
-      "@utils/firebase": ["./utils/firebase"],
       "@utils/constants": ["./utils/constants"],
       "@utils/helpers": ["./utils/helpers"],
       "@utils/contexts": ["./utils/contexts"],

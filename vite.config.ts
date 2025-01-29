@@ -13,7 +13,6 @@ export default defineConfig({
       '@components': path.resolve(__dirname, './src/components'),
       '@pages': path.resolve(__dirname, './src/pages'),
       '@utils/api': path.resolve(__dirname, './src/utils/api'),
-      '@utils/firebase': path.resolve(__dirname, './src/utils/firebase'),
       '@utils/constants': path.resolve(__dirname, './src/utils/constants'),
       '@utils/helpers': path.resolve(__dirname, './src/utils/helpers'),
       '@utils/contexts': path.resolve(__dirname, './src/utils/contexts'),

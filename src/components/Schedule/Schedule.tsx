@@ -1,9 +1,26 @@
 import React, { useState } from 'react';
-import s from './Schedule.module.scss';
+import styles from './Schedule.module.scss';
 import Button from '@common/Button/Button';
 import { Link } from 'react-router-dom';
 
-const Schedule = ({ scheduleQueryData }) => {
+interface seancesProps {
+  time: string;
+  hall: {
+    name: string;
+    places: any[][];
+  };
+}
+
+interface scheduleQueryProps {
+  date: string;
+  seances: seancesProps[];
+}
+
+interface scheduleQueryDataProps {
+  scheduleQueryData: scheduleQueryProps[];
+}
+
+const Schedule = ({ scheduleQueryData }: scheduleQueryDataProps) => {
   const [activeDay, setActiveDay] = useState(0);
   const [activeTime, setActiveTime] = useState(null);
 
@@ -14,7 +31,7 @@ const Schedule = ({ scheduleQueryData }) => {
   );
 
   // Группируем сеансы по залам
-  const groupedSeances = selectedDaySchedule.seances.reduce((acc, seance) => {
+  const groupedSeances = selectedDaySchedule?.seances.reduce((acc, seance) => {
     const hallName = seance.hall.name;
     if (!acc[hallName]) {
       acc[hallName] = [];
@@ -26,16 +43,16 @@ const Schedule = ({ scheduleQueryData }) => {
   console.log(groupedSeances);
 
   return (
-    <div className={s.days_container}>
-      <div className={s.schedule_dates}>
+    <div className={styles.days_container}>
+      <div className={styles.schedule_dates}>
         {scheduleQueryData.map((elem, index) => {
           return (
             <div
               onClick={() => setActiveDay(index)}
               className={
                 index == activeDay
-                  ? `${s.day_date} ${s.day_active}`
-                  : s.day_date
+                  ? `${styles.day_date} ${styles.day_active}`
+                  : styles.day_date
               }
               key={index}
             >
@@ -44,11 +61,11 @@ const Schedule = ({ scheduleQueryData }) => {
           );
         })}
       </div>
-      <div className={s.schedule_time}>
+      <div className={styles.schedule_time}>
         {Object.entries(groupedSeances).map(([hallName, seances]) => (
-          <div key={hallName} className={s.hall_block}>
+          <div key={hallName} className={styles.hall_block}>
             <h3>{hallName}</h3>
-            <div className={s.seances_list}>
+            <div className={styles.seances_list}>
               {seances.map((seance, id) => {
                 return (
                   <div
@@ -56,8 +73,8 @@ const Schedule = ({ scheduleQueryData }) => {
                     onClick={() => setActiveTime(seance.time)}
                     className={
                       seance.time == activeTime
-                        ? `${s.seance_time} ${s.time_active}`
-                        : s.seance_time
+                        ? `${styles.seance_time} ${styles.time_active}`
+                        : styles.seance_time
                     }
                   >
                     {seance.time}

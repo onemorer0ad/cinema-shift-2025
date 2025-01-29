@@ -1,9 +1,18 @@
 import React, { ComponentProps } from 'react';
+import clsx from 'clsx';
 import styles from './Button.module.scss';
 
-const Button = ({ children, onClick }: ComponentProps<'button'>) => {
+interface ButtonProps extends ComponentProps<'button'> {
+  variant?: 'contained';
+}
+
+const Button = ({ children, variant = 'contained', ...props }: ButtonProps) => {
   return (
-    <button onClick={onClick} className={styles.button} type="button">
+    <button
+      {...props}
+      className={clsx(styles.button, variant && styles[variant])}
+      type="button"
+    >
       {children}
     </button>
   );

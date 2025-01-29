@@ -1,10 +1,10 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import s from './FilmsPage.module.scss';
+import React from 'react';
+import styles from './FilmsPage.module.scss';
 import Button from '@common/Button/Button';
 import Rating from '@common/Rating/Rating';
 import { useRequestFilmsQuery } from '@utils/api/hooks';
 import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '@utils/api/instace';
 
 interface Film {
   actors: any[];
@@ -25,19 +25,18 @@ interface Film {
 const FilmsPage = () => {
   const { data, error, isLoading, isError } = useRequestFilmsQuery();
   const navigate = useNavigate();
-  const BASE_URL = 'https://shift-intensive.ru/api'; // Базовый URL сервера
 
   if (isLoading) return <div>Загрузка</div>;
   console.log(data.data, error);
   return (
-    <main className={s.container}>
+    <main className={styles.container}>
       <h1>Афиша</h1>
-      <div className={s.filmsGrid}>
+      <div className={styles.filmsGrid}>
         {data.data.films.map((film) => (
-          <div key={film.id} className={s.filmCard}>
-            <div className={s.imageContainer}>
+          <div key={film.id} className={styles.filmCard}>
+            <div className={styles.imageContainer}>
               <img src={`${BASE_URL}${film.img}`} alt={film.name} />
-              <div className={s.filmCard_info}>
+              <div className={styles.filmCard_info}>
                 <ul>
                   {film.genres.map((genre) => {
                     return <li key={genre}>{genre}</li>;
