@@ -63,19 +63,17 @@ const IdentifyFormCinema = () => {
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmitHandler)}>
       <h1 className={styles.title}>Введите ваши данные</h1>
-      {loginLabelNames.map((name) => {
-        return (
-          <Input
-            key={name}
-            placeholder={name}
-            register={register}
-            name={name}
-            errors={errors}
-            required
-            //   disabled={isPending}
-          />
-        );
-      })}
+      {loginLabelNames.map((name) => (
+        <Input
+          key={name}
+          placeholder={name}
+          register={register}
+          name={name}
+          errors={errors}
+          required
+          //   disabled={isPending}
+        />
+      ))}
       <div className="mt-8">
         <Button type="submit">Продолжить</Button>
       </div>

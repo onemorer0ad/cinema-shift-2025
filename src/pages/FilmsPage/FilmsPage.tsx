@@ -27,7 +27,6 @@ const FilmsPage = () => {
   const navigate = useNavigate();
 
   if (isLoading) return <div>Загрузка</div>;
-  console.log(data.data, error);
   return (
     <main className={styles.container}>
       <h1>Афиша</h1>
