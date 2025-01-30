@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './FilmPage.module.scss';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import {
   useRequestFilmQuery,
   useRequestFilmScheduleQuery,
@@ -11,7 +11,7 @@ import { BASE_URL } from '@utils/api/instace';
 
 const FilmPage = () => {
   const { filmId } = useParams();
-  const navigate = useNavigate();
+
   if (!filmId) return;
   const {
     data: filmQueryData,
@@ -55,7 +55,11 @@ const FilmPage = () => {
           <p>{film.description}</p>
         </div>
       </div>
-      <Schedule scheduleQueryData={scheduleQueryData?.data.schedules} />
+      <Schedule
+        filmName={film.name}
+        filmId={filmId}
+        scheduleQueryData={scheduleQueryData?.data.schedules}
+      />
     </div>
   );
 };

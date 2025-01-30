@@ -59,8 +59,8 @@
   opacity: 0.8;
 }
 
-.seat.selected {
-  background-color: #4a148c;
+.seat.blocked {
+  background-color: $IndicatorLight;
 }
 
 .info {
@@ -69,10 +69,6 @@
 
 .legend {
   color: #333;
-}
-
-.blueText {
-  color: #0000ff;
 }
 
 .dateTime,

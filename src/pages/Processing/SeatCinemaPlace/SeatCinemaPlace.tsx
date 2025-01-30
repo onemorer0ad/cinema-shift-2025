@@ -1,19 +1,49 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styles from './SeatCinemaPlace.module.scss';
+import Button from '@common/Button/Button';
+import { useNavigate, useParams } from 'react-router-dom';
+import { AppContext } from '@utils/contexts';
+import Tooltip from '@common/Tooltip/Tooltip';
 
-const SeatCinemaPlace: React.FC = () => {
-  const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
+const SeatCinemaPlace = () => {
+  const [selectedSeats, setSelectedSeats] = useState<
+    Array<{ price: number; id: number; seatId: number }>
+  >([]);
+  const { sharedData, setSharedData } = useContext(AppContext);
+  const navigate = useNavigate();
+  const { filmId } = useParams();
 
-  const rows = 6;
-  const seatsPerRow = 10;
+  console.log(sharedData);
 
-  const handleSeatClick = (seatId: string) => {
-    if (selectedSeats.includes(seatId)) {
-      setSelectedSeats(selectedSeats.filter((seat) => seat !== seatId));
-    } else {
-      setSelectedSeats([...selectedSeats, seatId]);
-    }
+  const handleSeatClick = ({ price, id, seatId }) => {
+    setSelectedSeats((prevSeats) => {
+      const seatIndex = prevSeats.findIndex(
+        (seat) => seat.id === id && seat.seatId === seatId
+      );
+
+      if (seatIndex !== -1) {
+        // Если место уже выбрано, удаляем его
+        return prevSeats.filter((_, index) => index !== seatIndex);
+      } else {
+        // Если место не выбрано, добавляем его
+        return [...prevSeats, { price, id, seatId }];
+      }
+    });
   };
+
+  const handleBuyClick = () => {
+    setSharedData({ ...sharedData, selectedSeats });
+    navigate(`/processing/identify/${filmId}`);
+  };
+
+  const hallName = sharedData.selectedHallAndTime.hall.name;
+  const hallTypesObject = {
+    Red: 'Красный',
+    Green: 'Зеленый',
+    Blue: 'Синий',
+  };
+
+  console.log(selectedSeats);
 
   return (
     <div className={styles.container}>
@@ -22,52 +52,82 @@ const SeatCinemaPlace: React.FC = () => {
 
       <div className={styles.screen}>Экран</div>
 
-      <div className={styles.priceInfo}>
-        <span className={styles.price}>300 ₽</span>
-        <span className={styles.seatType}>1 ряд, 5 место</span>
-      </div>
-
       <div className={styles.seatsContainer}>
-        {Array.from({ length: rows }).map((_, rowIndex) => (
-          <div key={rowIndex} className={styles.row}>
-            <span className={styles.rowNumber}>{rowIndex + 1}</span>
-            {Array.from({ length: seatsPerRow }).map((_, seatIndex) => {
-              const seatId = `${rowIndex + 1}-${seatIndex + 1}`;
-              return (
-                <button
-                  key={seatId}
-                  className={`${styles.seat} ${
-                    selectedSeats.includes(seatId) ? styles.selected : ''
-                  }`}
-                  onClick={() => handleSeatClick(seatId)}
-                />
-              );
-            })}
-          </div>
-        ))}
+        {sharedData?.selectedHallAndTime.hall.places.map((place, id) => {
+          return (
+            <div key={id} className={styles.row}>
+              <span className={styles.rowNumber}>{id + 1}</span>
+              {place.map((seatElement, seatId) => {
+                // console.log(seatElement.price, id, seatId);
+                return (
+                  <Tooltip
+                    content={{
+                      price: seatElement.price,
+                      id: id + 1,
+                      seatId: seatId + 1,
+                    }}
+                    key={seatId}
+                  >
+                    <button
+                      disabled={
+                        seatElement.type == 'BLOCKED' ? true : undefined
+                      }
+                      className={`${styles.seat} ${
+                        seatElement.type == 'BLOCKED' ? styles.blocked : ''
+                      } ${
+                        selectedSeats.some(
+                          (seat) =>
+                            seat.id === id + 1 && seat.seatId === seatId + 1
+                        )
+                          ? styles.selected
+                          : ''
+                      }`}
+                      onClick={() =>
+                        handleSeatClick({
+                          price: seatElement.price,
+                          id: id + 1,
+                          seatId: seatId + 1,
+                        })
+                      }
+                    />
+                  </Tooltip>
+                );
+              })}
+            </div>
+          );
+        })}
       </div>
 
       <div className={styles.info}>
         <div className={styles.legend}>
-          <span className={styles.blueText}>Синий</span>
+          <span>{hallTypesObject[hallName]}</span>
           <div className={styles.dateTime}>
             <span>Дата и время:</span>
-            <span>3 июля 13:45</span>
+            <span>
+              {sharedData.seanceDate} {sharedData.selectedHallAndTime.time}
+            </span>
           </div>
           <div className={styles.seatInfo}>
             <span>Места:</span>
-            <span>2 ряд - 8, 9</span>
+            <span>
+              {selectedSeats
+                .sort((a, b) => a.id - b.id || a.seatId - b.seatId)
+                .map((seat) => `${seat.id} ряд - ${seat.seatId}`)
+                .join(', ')}
+            </span>
           </div>
           <div className={styles.total}>
             <span>Сумма:</span>
-            <span>500 ₽</span>
+            <span>
+              {selectedSeats.reduce((sum, seat) => sum + seat.price, 0)} ₽
+            </span>
           </div>
         </div>
       </div>
 
       <div className={styles.actions}>
-        <button className={styles.backButton}>Назад</button>
-        <button className={styles.buyButton}>Купить</button>
+        <Button onClick={() => navigate(`/film/${filmId}`)}>Назад</Button>
+        <Button onClick={handleBuyClick}>Купить</Button>
       </div>
     </div>
   );

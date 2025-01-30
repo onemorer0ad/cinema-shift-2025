@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styles from './Schedule.module.scss';
 import Button from '@common/Button/Button';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { AppContext } from '@utils/contexts';
 
 interface seancesProps {
   time: string;
@@ -18,16 +19,27 @@ interface scheduleQueryProps {
 
 interface scheduleQueryDataProps {
   scheduleQueryData: scheduleQueryProps[];
+  filmId: string;
+  filmName: string;
 }
 
-const Schedule = ({ scheduleQueryData }: scheduleQueryDataProps) => {
-  const [activeDay, setActiveDay] = useState(0);
+const Schedule = ({
+  scheduleQueryData,
+  filmId,
+  filmName,
+}: scheduleQueryDataProps) => {
+  const [activeDayIndex, setActiveDayIndex] = useState(0);
+  const [activeDay, setActiveDay] = useState('');
   const [activeTime, setActiveTime] = useState(null);
-
-  console.log(activeTime);
+  const navigate = useNavigate();
+  const { sharedData, setSharedData } = useContext(AppContext);
 
   const selectedDaySchedule = scheduleQueryData.find(
-    (_, id) => id === activeDay
+    (_, id) => id === activeDayIndex
+  );
+
+  const selectedHallAndTime = selectedDaySchedule!.seances.find(
+    (elem) => elem.time == activeTime
   );
 
   // Группируем сеансы по залам
@@ -40,7 +52,14 @@ const Schedule = ({ scheduleQueryData }: scheduleQueryDataProps) => {
     return acc;
   }, {});
 
-  console.log(groupedSeances);
+  const filmDateAndTimeHandler = () => {
+    setSharedData({
+      filmName: filmName,
+      seanceDate: activeDay,
+      selectedHallAndTime,
+    });
+    navigate(`/processing/cinemaplace/${filmId}`);
+  };
 
   return (
     <div className={styles.days_container}>
@@ -48,9 +67,12 @@ const Schedule = ({ scheduleQueryData }: scheduleQueryDataProps) => {
         {scheduleQueryData.map((elem, index) => {
           return (
             <div
-              onClick={() => setActiveDay(index)}
+              onClick={() => {
+                setActiveDayIndex(index);
+                setActiveDay(elem.date);
+              }}
               className={
-                index == activeDay
+                index == activeDayIndex
                   ? `${styles.day_date} ${styles.day_active}`
                   : styles.day_date
               }
@@ -70,7 +92,9 @@ const Schedule = ({ scheduleQueryData }: scheduleQueryDataProps) => {
                 return (
                   <div
                     key={id}
-                    onClick={() => setActiveTime(seance.time)}
+                    onClick={() => {
+                      setActiveTime(seance.time);
+                    }}
                     className={
                       seance.time == activeTime
                         ? `${styles.seance_time} ${styles.time_active}`
@@ -85,7 +109,7 @@ const Schedule = ({ scheduleQueryData }: scheduleQueryDataProps) => {
           </div>
         ))}
       </div>
-      <Button>Продолжить</Button>
+      <Button onClick={filmDateAndTimeHandler}>Продолжить</Button>
     </div>
   );
 };
