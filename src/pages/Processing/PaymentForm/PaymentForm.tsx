@@ -10,6 +10,8 @@ import { useSeance } from '@utils/contexts/store/SeanceContext';
 import { useFormContext } from '@utils/contexts/store/FormDataContext';
 import { useSubmitUserDataMutation } from '@utils/api/hooks/payment';
 import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '@utils/constants';
+import { usePayment } from '@utils/contexts/store/SuccessPaymentContext';
 
 const validationSchema = Yup.object().shape({
   cardNumber: Yup.string().test(
@@ -37,6 +39,7 @@ const PaymentForm = () => {
   const { selectedSeatsData, setSelectedSeatsData } = useSelectedSeatContext();
   const { seanceInfo, setSeanceInfo } = useSeance();
   const { formData, setFormData } = useFormContext();
+  const { successPayment, setSuccessPayment } = usePayment();
   const navigate = useNavigate();
 
   const {
@@ -52,25 +55,18 @@ const PaymentForm = () => {
 
   const { mutate, isPending, isError } = useSubmitUserDataMutation({
     onSuccess: (data) => {
-      console.log(data);
+      setSuccessPayment(data);
       reset();
-      navigate(`/success`);
+      navigate(ROUTES.SUCCESS);
     },
     onError: (error) => {
-      if (error.code === 'auth/email-already-in-use') {
-        setError(
-          'email',
-          { type: 'custom', message: 'email already in use' },
-          { shouldFocus: true }
-        );
-      }
       console.log(error);
     },
   });
 
   const transformedSeats = selectedSeatsData.selectedSeats.map((seat) => ({
-    row: seat.seatId,
-    column: seat.id,
+    row: seat.id,
+    column: seat.seatId,
   }));
 
   const onSubmitHandler = (cardInfo: any) => {

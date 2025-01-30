@@ -28,7 +28,6 @@ export interface SubmitUserDataParams {
 export const submitUserData = async (data: SubmitUserDataParams) => {
   try {
     const response = await api.post('cinema/payment', data, data.config);
-    console.log(response);
     return response.data; // Возвращаем только полезные данные
   } catch (error) {
     console.error('Ошибка при отправке запроса:', error);

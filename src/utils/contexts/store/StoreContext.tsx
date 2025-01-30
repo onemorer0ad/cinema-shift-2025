@@ -2,6 +2,7 @@ import React from 'react';
 import { SeanceProvider } from './SeanceContext/SeanceContext';
 import { FormDataProvider } from './FormDataContext/FormDataContext';
 import { SelectedSeatsDataProvider } from './SelectedSeatsContext';
+import { PaymentProvider } from './SuccessPaymentContext';
 
 export const ContextProvider = ({
   children,
@@ -11,7 +12,9 @@ export const ContextProvider = ({
   return (
     <SeanceProvider>
       <SelectedSeatsDataProvider>
-        <FormDataProvider>{children}</FormDataProvider>
+        <FormDataProvider>
+          <PaymentProvider>{children}</PaymentProvider>
+        </FormDataProvider>
       </SelectedSeatsDataProvider>
     </SeanceProvider>
   );

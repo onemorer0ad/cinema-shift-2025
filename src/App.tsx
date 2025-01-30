@@ -8,6 +8,7 @@ import SeatCinemaPlace from '@pages/Processing/SeatCinemaPlace/SeatCinemaPlace';
 import IdentifyFormCinema from '@pages/Processing/IdentifyFormCinema/IdentifyFormCinema';
 import PaymentForm from '@pages/Processing/PaymentForm/PaymentForm';
 import { ContextProvider } from '@utils/contexts';
+import SuccessPayment from '@pages/Processing/SuccessPayment/SuccessPayment';
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
           <Route path={ROUTES.CINEMAPLACE} element={<SeatCinemaPlace />} />
           <Route path={ROUTES.IDENTIFY} element={<IdentifyFormCinema />} />
           <Route path={ROUTES.PAYMENT} element={<PaymentForm />} />
+          <Route path={ROUTES.SUCCESS} element={<SuccessPayment />} />
         </Routes>
       </BrowserRouter>
     </ContextProvider>

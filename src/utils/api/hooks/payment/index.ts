@@ -7,7 +7,6 @@ import {
 export const useSubmitUserDataMutation = (rest: any) => {
   return useMutation({
     mutationFn: (values: SubmitUserDataParams) => {
-      console.log(values);
       return submitUserData(values);
     },
     ...rest,

@@ -27,8 +27,6 @@ export const FormDataProvider = ({ children }: { children: ReactNode }) => {
     adress: '',
   });
 
-  console.log('FormDataProvider is rendering');
-
   return (
     <FormDataContext.Provider value={{ formData, setFormData }}>
       {children}

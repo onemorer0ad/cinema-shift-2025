@@ -4,5 +4,6 @@ export const ROUTES = {
   CINEMAPLACE: '/processing/cinemaplace/:filmId',
   IDENTIFY: '/processing/identify/:filmId',
   PAYMENT: '/processing/form/:filmId',
+  SUCCESS: '/success',
   AUTH: '/auth',
 };
