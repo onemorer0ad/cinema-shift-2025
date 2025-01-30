@@ -7,6 +7,7 @@ import Input from '@common/Input/Input';
 import { verifyOtp } from '@utils/api/requests/auth/otp';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useAuth } from '@utils/contexts/auth/AuthContext';
 
 interface VerifyCodeFormValues {
   code: string;
@@ -20,6 +21,7 @@ const VerifyCodePage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const phone = location.state?.phone;
+  const { setAuthData } = useAuth();
 
   const {
     register,
@@ -36,8 +38,11 @@ const VerifyCodePage = () => {
         navigate('/auth');
         return;
       }
-      await verifyOtp({ phone, code: data.code });
-      navigate('/films');
+      const response = await verifyOtp({ phone, code: data.code });
+      if (response.success && response.token) {
+        setAuthData(response.token, response.user);
+        navigate('/');
+      }
     } catch (error) {
       console.error('Ошибка при проверке кода:', error);
     }
@@ -47,7 +52,6 @@ const VerifyCodePage = () => {
     <div className={styles.container}>
       <form className={styles.form} onSubmit={handleSubmit(onSubmitCode)}>
         <h1>Подтверждение</h1>
-        <p>Введите код из консоли</p>
         <Input
           placeholder="Код подтверждения"
           register={register}

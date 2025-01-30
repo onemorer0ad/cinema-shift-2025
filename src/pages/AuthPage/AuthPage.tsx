@@ -32,7 +32,6 @@ const AuthPage = () => {
   const onSubmitPhone = async (data: AuthFormValues) => {
     try {
       const response = await generateOtp({ phone: data.phone });
-      console.log('Код подтверждения:', response.code);
       navigate('/verify', { state: { phone: data.phone } });
     } catch (error) {
       console.error('Ошибка при отправке кода:', error);

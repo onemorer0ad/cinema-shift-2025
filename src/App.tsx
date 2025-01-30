@@ -11,24 +11,27 @@ import { ContextProvider } from '@utils/contexts';
 import SuccessPayment from '@pages/Processing/SuccessPayment/SuccessPayment';
 import AuthPage from '@pages/AuthPage/AuthPage';
 import VerifyCodePage from '@pages/VerifyCodePage/VerifyCodePage';
+import { AuthProvider } from '@utils/contexts/auth/AuthContext';
 
 const App = () => {
   return (
-    <ContextProvider>
-      <BrowserRouter>
-        <Navigation />
-        <Routes>
-          <Route path={ROUTES.AUTH} element={<AuthPage />} />
-          <Route path={ROUTES.VERIFY} element={<VerifyCodePage />} />
-          <Route path={ROUTES.FILMS} element={<FilmsPage />} />
-          <Route path={ROUTES.FILM} element={<FilmPage />} />
-          <Route path={ROUTES.CINEMAPLACE} element={<SeatCinemaPlace />} />
-          <Route path={ROUTES.IDENTIFY} element={<IdentifyFormCinema />} />
-          <Route path={ROUTES.PAYMENT} element={<PaymentForm />} />
-          <Route path={ROUTES.SUCCESS} element={<SuccessPayment />} />
-        </Routes>
-      </BrowserRouter>
-    </ContextProvider>
+    <AuthProvider>
+      <ContextProvider>
+        <BrowserRouter>
+          <Navigation />
+          <Routes>
+            <Route path={ROUTES.AUTH} element={<AuthPage />} />
+            <Route path={ROUTES.VERIFY} element={<VerifyCodePage />} />
+            <Route path={ROUTES.FILMS} element={<FilmsPage />} />
+            <Route path={ROUTES.FILM} element={<FilmPage />} />
+            <Route path={ROUTES.CINEMAPLACE} element={<SeatCinemaPlace />} />
+            <Route path={ROUTES.IDENTIFY} element={<IdentifyFormCinema />} />
+            <Route path={ROUTES.PAYMENT} element={<PaymentForm />} />
+            <Route path={ROUTES.SUCCESS} element={<SuccessPayment />} />
+          </Routes>
+        </BrowserRouter>
+      </ContextProvider>
+    </AuthProvider>
   );
 };
 

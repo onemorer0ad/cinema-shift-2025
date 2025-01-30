@@ -7,12 +7,18 @@ import LogoRightSvg from '@common/LogoSvg/LogoRightSvg';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { ROUTES } from '@utils/constants';
 import Button from '@common/Button/Button';
+import { useAuth } from '@utils/contexts/auth/AuthContext';
 
 const Navigation = () => {
+  const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleAuthClick = () => {
-    navigate(ROUTES.AUTH);
+    if (isAuthenticated) {
+      logout();
+    } else {
+      navigate(ROUTES.AUTH);
+    }
   };
 
   return (
@@ -36,7 +42,9 @@ const Navigation = () => {
         </div>
       </div>
       <div className={styles.rightSection}>
-        <Button onClick={handleAuthClick}>Войти</Button>
+        <Button onClick={handleAuthClick}>
+          {isAuthenticated ? 'Выйти' : 'Войти'}
+        </Button>
       </div>
     </nav>
   );
