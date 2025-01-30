@@ -1,24 +1,24 @@
 import React from 'react';
 import styles from './Navigation.module.scss';
-import logo_left from '../../assets/img/logo_left.png';
-import logo_right from '../../assets/img/logo_right.png';
-import PosterSvg from './PosterSvg/PosterSvg';
-import ProfileSvg from './ProfileSvg/ProfileSvg';
-import TicketsSvg from './TicketsSvg/TicketsSvg';
-import ShiftCinemaSvg from './LogoSvg/ShiftCinemaSvg';
-import LogoRightSvg from './LogoSvg/LogoRightSvg';
+import PosterSvg from '../../common/PosterSvg/PosterSvg';
+import ProfileSvg from '../../common/ProfileSvg/ProfileSvg';
+import TicketsSvg from '../../common/TicketsSvg/TicketsSvg';
+import ShiftCinemaSvg from '../../common/LogoSvg/ShiftCinemaSvg';
+import LogoRightSvg from '../../common/LogoSvg/LogoRightSvg';
+import { NavLink } from 'react-router-dom';
+import { ROUTES } from '@utils/constants';
 
 const Navigation = () => {
   return (
     <nav className={styles.navigation}>
-      <div className={styles.navigation_item}>
+      <NavLink to={ROUTES.FILMS} className={styles.navigation_item}>
         <ShiftCinemaSvg />
         <LogoRightSvg />
-      </div>
-      <div className={styles.navigation_item}>
+      </NavLink>
+      {/* <NavLink to={ROUTES.FILMS} className={styles.navigation_item}>
         <PosterSvg />
         Афиша
-      </div>
+      </NavLink> */}
       <div className={styles.navigation_item}>
         <ProfileSvg />
         Профиль

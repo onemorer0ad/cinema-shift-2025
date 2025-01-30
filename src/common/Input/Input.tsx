@@ -9,15 +9,27 @@ interface InputProps extends React.ComponentPropsWithRef<'input'> {
   errors: Partial<FieldErrorsImpl<any>>; // Ошибки для полей
 }
 
+type InputNames = {
+  [key: string]: string;
+};
+
+const names: InputNames = {
+  lastName: 'Фамилия',
+  firstName: 'Имя',
+  phoneNumber: 'Номер телефона',
+  email: 'Email',
+  adress: 'Адрес проживания',
+};
+
 const Input = ({ register, name, errors, ...rest }: InputProps) => {
-  // const errorMessage = errors[name]?.message as string | undefined;
+  const errorMessage = errors[name]?.message as string | undefined;
   return (
     <>
       <label className={styles.label} htmlFor="FirstName">
-        {name}
+        {names[name]}
       </label>
       <input className={styles.field} {...register(name)} {...rest} />
-      {/* <p className={styles.errorMsg}>{errorMessage}</p> */}
+      <p className={styles.errorMsg}>{errorMessage}</p>
     </>
   );
 };

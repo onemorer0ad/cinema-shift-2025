@@ -1,0 +1,86 @@
+/* src/pages/Processing/PaymentForm/PaymentForm.module.scss */
+.container {
+  margin-top: 30px;
+}
+.paymentForm {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffffff;
+}
+
+h2 {
+  //styleName: Title/H2;
+  font-family: Inter;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
+  text-align: center;
+  color: #141c24;
+}
+
+.formGroup {
+  margin-bottom: 15px;
+}
+
+.label {
+  display: block;
+
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  background-color: $BGPrimary;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  background-color: $BGDisable;
+  gap: 16px;
+  padding: 24px;
+  border-radius: 16px;
+}
+
+.bottomButtons {
+  display: flex;
+  gap: 16px;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.backButton {
+  padding: 10px 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  background-color: #ffffff;
+  color: #000;
+  cursor: pointer;
+}
+
+.payButton {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #8e44ad;
+  color: white;
+  cursor: pointer;
+}
+
+.backButton:hover {
+  background-color: #f0f0f0;
+}
+
+.payButton:hover {
+  background-color: #5a54e0; /* Темнее фиолетового при наведении */
+}

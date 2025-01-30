@@ -2,18 +2,18 @@ import React, { useContext, useState } from 'react';
 import styles from './SeatCinemaPlace.module.scss';
 import Button from '@common/Button/Button';
 import { useNavigate, useParams } from 'react-router-dom';
-import { AppContext } from '@utils/contexts';
 import Tooltip from '@common/Tooltip/Tooltip';
+import { useSelectedSeatContext } from '@utils/contexts/store/SelectedSeatsContext';
+import { useSeance } from '@utils/contexts/store/SeanceContext';
 
 const SeatCinemaPlace = () => {
   const [selectedSeats, setSelectedSeats] = useState<
     Array<{ price: number; id: number; seatId: number }>
   >([]);
-  const { sharedData, setSharedData } = useContext(AppContext);
+  const { selectedSeatsData, setSelectedSeatsData } = useSelectedSeatContext();
+  const { seanceInfo, setSeanceInfo } = useSeance();
   const navigate = useNavigate();
   const { filmId } = useParams();
-
-  console.log(sharedData);
 
   const handleSeatClick = ({ price, id, seatId }) => {
     setSelectedSeats((prevSeats) => {
@@ -32,18 +32,16 @@ const SeatCinemaPlace = () => {
   };
 
   const handleBuyClick = () => {
-    setSharedData({ ...sharedData, selectedSeats });
+    setSelectedSeatsData({ ...selectedSeatsData, selectedSeats });
     navigate(`/processing/identify/${filmId}`);
   };
 
-  const hallName = sharedData.selectedHallAndTime.hall.name;
+  const hallName = seanceInfo.selectedHallAndTime.hall.name;
   const hallTypesObject = {
     Red: 'Красный',
     Green: 'Зеленый',
     Blue: 'Синий',
   };
-
-  console.log(selectedSeats);
 
   return (
     <div className={styles.container}>
@@ -53,7 +51,7 @@ const SeatCinemaPlace = () => {
       <div className={styles.screen}>Экран</div>
 
       <div className={styles.seatsContainer}>
-        {sharedData?.selectedHallAndTime.hall.places.map((place, id) => {
+        {seanceInfo?.selectedHallAndTime.hall.places.map((place, id) => {
           return (
             <div key={id} className={styles.row}>
               <span className={styles.rowNumber}>{id + 1}</span>
@@ -104,7 +102,7 @@ const SeatCinemaPlace = () => {
           <div className={styles.dateTime}>
             <span>Дата и время:</span>
             <span>
-              {sharedData.seanceDate} {sharedData.selectedHallAndTime.time}
+              {seanceInfo.seanceDate} {seanceInfo.selectedHallAndTime.time}
             </span>
           </div>
           <div className={styles.seatInfo}>

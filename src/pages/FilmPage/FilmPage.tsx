@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './FilmPage.module.scss';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   useRequestFilmQuery,
   useRequestFilmScheduleQuery,
@@ -11,6 +11,7 @@ import { BASE_URL } from '@utils/api/instace';
 
 const FilmPage = () => {
   const { filmId } = useParams();
+  const navigate = useNavigate();
 
   if (!filmId) return;
   const {
@@ -56,7 +57,6 @@ const FilmPage = () => {
         </div>
       </div>
       <Schedule
-        filmName={film.name}
         filmId={filmId}
         scheduleQueryData={scheduleQueryData?.data.schedules}
       />
