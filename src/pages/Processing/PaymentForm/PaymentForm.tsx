@@ -12,6 +12,7 @@ import { useSubmitUserDataMutation } from '@utils/api/hooks/payment';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@utils/constants';
 import { usePayment } from '@utils/contexts/store/SuccessPaymentContext';
+import { SuccessContextType } from 'utils/contexts/store/SuccessPaymentContext';
 
 const validationSchema = Yup.object().shape({
   cardNumber: Yup.string().test(
@@ -34,19 +35,17 @@ const validationSchema = Yup.object().shape({
     )
     .required('Это поле обязательно для заполнения'),
 });
-
 const PaymentForm = () => {
-  const { selectedSeatsData, setSelectedSeatsData } = useSelectedSeatContext();
-  const { seanceInfo, setSeanceInfo } = useSeance();
-  const { formData, setFormData } = useFormContext();
-  const { successPayment, setSuccessPayment } = usePayment();
+  const { selectedSeatsData } = useSelectedSeatContext();
+  const { seanceInfo } = useSeance();
+  const { formData } = useFormContext();
+  const { setSuccessPayment } = usePayment();
   const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    setError,
     reset,
   } = useForm<any>({
     mode: 'onChange',
@@ -54,20 +53,22 @@ const PaymentForm = () => {
   });
 
   const { mutate, isPending, isError } = useSubmitUserDataMutation({
-    onSuccess: (data) => {
+    onSuccess: (data: SuccessContextType) => {
       setSuccessPayment(data);
       reset();
       navigate(ROUTES.SUCCESS);
     },
-    onError: (error) => {
+    onError: (error: any) => {
       console.log(error);
     },
   });
 
-  const transformedSeats = selectedSeatsData.selectedSeats.map((seat) => ({
-    row: seat.id,
-    column: seat.seatId,
-  }));
+  const transformedSeats = selectedSeatsData.selectedSeats.map(
+    (seat: { id: string; seatId: string }) => ({
+      row: seat.id,
+      column: seat.seatId,
+    })
+  );
 
   const onSubmitHandler = (cardInfo: any) => {
     const userData = {
