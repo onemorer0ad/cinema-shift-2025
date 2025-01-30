@@ -6,6 +6,12 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { AppContext, FormDataProps } from '@utils/contexts';
 import Button from '@common/Button/Button';
+import {
+  emailValidation,
+  firstNameValidation,
+  lastNameValidation,
+  phoneNumberValidation,
+} from '@utils/constants';
 
 const loginLabelNames = [
   'lastName',
@@ -16,29 +22,10 @@ const loginLabelNames = [
 ];
 
 const schema = yup.object().shape({
-  lastName: yup
-    .string()
-    .matches(/^[A-Za-zА-Яа-я ]*$/, 'Некорректный формат')
-    .max(40, 'Name must not exceed 40 characters')
-    .required('Name is required'),
-  firstName: yup
-    .string()
-    .matches(/^[A-Za-zА-Яа-я ]*$/, 'Некорректный формат')
-    .max(40, 'Name must not exceed 40 characters')
-    .required('Name is required'),
-  email: yup
-    .string()
-    .matches(
-      /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,3}$/i,
-      'Invalid email address'
-    )
-    .required('Email is required'),
-  phoneNumber: yup
-    .string()
-    .matches(
-      /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
-      'Некорректный формат'
-    ),
+  lastName: lastNameValidation,
+  firstName: firstNameValidation,
+  email: emailValidation,
+  phoneNumber: phoneNumberValidation,
 });
 const IdentifyFormCinema = () => {
   const context = useContext(AppContext);

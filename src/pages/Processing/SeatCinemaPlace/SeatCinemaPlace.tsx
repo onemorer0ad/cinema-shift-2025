@@ -5,6 +5,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { AppContext } from '@utils/contexts';
 import Tooltip from '@common/Tooltip/Tooltip';
 
+const hallTypesObject = {
+  Red: 'Красный',
+  Green: 'Зеленый',
+  Blue: 'Синий',
+};
+
 const SeatCinemaPlace = () => {
   const [selectedSeats, setSelectedSeats] = useState<
     Array<{ price: number; id: number; seatId: number }>
@@ -37,11 +43,6 @@ const SeatCinemaPlace = () => {
   };
 
   const hallName = sharedData.selectedHallAndTime.hall.name;
-  const hallTypesObject = {
-    Red: 'Красный',
-    Green: 'Зеленый',
-    Blue: 'Синий',
-  };
 
   console.log(selectedSeats);
 
