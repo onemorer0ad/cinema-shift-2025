@@ -6,4 +6,5 @@ export const ROUTES = {
   PAYMENT: '/processing/form/:filmId',
   SUCCESS: '/success',
   AUTH: '/auth',
+  VERIFY: '/verify',
 };

@@ -9,6 +9,8 @@ import IdentifyFormCinema from '@pages/Processing/IdentifyFormCinema/IdentifyFor
 import PaymentForm from '@pages/Processing/PaymentForm/PaymentForm';
 import { ContextProvider } from '@utils/contexts';
 import SuccessPayment from '@pages/Processing/SuccessPayment/SuccessPayment';
+import AuthPage from '@pages/AuthPage/AuthPage';
+import VerifyCodePage from '@pages/VerifyCodePage/VerifyCodePage';
 
 const App = () => {
   return (
@@ -16,6 +18,8 @@ const App = () => {
       <BrowserRouter>
         <Navigation />
         <Routes>
+          <Route path={ROUTES.AUTH} element={<AuthPage />} />
+          <Route path={ROUTES.VERIFY} element={<VerifyCodePage />} />
           <Route path={ROUTES.FILMS} element={<FilmsPage />} />
           <Route path={ROUTES.FILM} element={<FilmPage />} />
           <Route path={ROUTES.CINEMAPLACE} element={<SeatCinemaPlace />} />
