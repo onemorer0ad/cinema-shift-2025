@@ -1,10 +1,9 @@
 import Input from '@common/Input/Input';
-import React, { useContext } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import styles from './IdentifyFormCinema.module.scss';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { AppContext, FormDataProps } from '@utils/contexts';
 import Button from '@common/Button/Button';
 import {
   emailValidation,
@@ -12,6 +11,13 @@ import {
   lastNameValidation,
   phoneNumberValidation,
 } from '@utils/constants';
+import { useNavigate, useParams } from 'react-router-dom';
+import {
+  useFormContext,
+  FormDataProps,
+} from '@utils/contexts/store/FormDataContext';
+import { useSelectedSeatContext } from '@utils/contexts/store/SelectedSeatsContext';
+import { useSeance } from '@utils/contexts/store/SeanceContext';
 
 const loginLabelNames = [
   'lastName',
@@ -27,10 +33,11 @@ const schema = yup.object().shape({
   email: emailValidation,
   phoneNumber: phoneNumberValidation,
 });
+
 const IdentifyFormCinema = () => {
-  const context = useContext(AppContext);
-  if (!context) return;
-  const { formData, setFormData } = context;
+  const { formData, setFormData } = useFormContext();
+  const navigate = useNavigate();
+  const { filmId } = useParams();
   const {
     register,
     handleSubmit,
@@ -41,10 +48,10 @@ const IdentifyFormCinema = () => {
     resolver: yupResolver(schema),
   });
 
-  console.log(formData);
   const onSubmitHandler = (data: FormDataProps) => {
     setFormData(data);
     reset();
+    navigate(`/processing/form/${filmId}`);
   };
 
   return (

@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import styles from './Schedule.module.scss';
 import Button from '@common/Button/Button';
 import { useNavigate } from 'react-router-dom';
-import { AppContext } from '@utils/contexts';
+import { useSeance } from '@utils/contexts/store/SeanceContext/SeanceContext';
 
 interface seancesProps {
   time: string;
@@ -20,19 +20,14 @@ interface scheduleQueryProps {
 interface scheduleQueryDataProps {
   scheduleQueryData: scheduleQueryProps[];
   filmId: string;
-  filmName: string;
 }
 
-const Schedule = ({
-  scheduleQueryData,
-  filmId,
-  filmName,
-}: scheduleQueryDataProps) => {
+const Schedule = ({ scheduleQueryData, filmId }: scheduleQueryDataProps) => {
   const [activeDayIndex, setActiveDayIndex] = useState(0);
   const [activeDay, setActiveDay] = useState('');
   const [activeTime, setActiveTime] = useState(null);
   const navigate = useNavigate();
-  const { sharedData, setSharedData } = useContext(AppContext);
+  const { seanceInfo, setSeanceInfo } = useSeance();
 
   const selectedDaySchedule = scheduleQueryData.find(
     (_, id) => id === activeDayIndex
@@ -53,9 +48,12 @@ const Schedule = ({
   }, {});
 
   const filmDateAndTimeHandler = () => {
-    setSharedData({
-      filmName: filmName,
-      seanceDate: activeDay,
+    setSeanceInfo({
+      filmId: filmId,
+      seance: {
+        date: activeDay,
+        time: selectedHallAndTime!.time,
+      },
       selectedHallAndTime,
     });
     navigate(`/processing/cinemaplace/${filmId}`);

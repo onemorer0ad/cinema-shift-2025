@@ -1,19 +1,22 @@
 /* src/pages/Processing/PaymentForm/PaymentForm.module.scss */
-
+.container {
+  margin-top: 30px;
+}
 .paymentForm {
   max-width: 400px;
   margin: 0 auto;
   padding: 20px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
   background-color: #ffffff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
+  //styleName: Title/H2;
+  font-family: Inter;
   font-size: 24px;
-  margin-bottom: 20px;
+  font-weight: 700;
+  line-height: 32px;
   text-align: center;
+  color: #141c24;
 }
 
 .formGroup {
@@ -22,6 +25,7 @@ h2 {
 
 .label {
   display: block;
+
   margin-bottom: 5px;
   font-weight: bold;
 }
@@ -30,14 +34,29 @@ h2 {
   width: 100%;
   padding: 10px;
   border: 1px solid #e0e0e0;
-  border-radius: 4px;
+  background-color: $BGPrimary;
+  border-radius: 10px;
   font-size: 16px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  background-color: $BGDisable;
+  gap: 16px;
+  padding: 24px;
+  border-radius: 16px;
+}
+
+.bottomButtons {
+  display: flex;
+  gap: 16px;
 }
 
 .buttonGroup {
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
+  margin-top: 16px;
 }
 
 .backButton {
@@ -53,8 +72,8 @@ h2 {
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
-  background-color: #6c63ff; /* Фиолетовый цвет */
-  color: #ffffff;
+  background-color: #8e44ad;
+  color: white;
   cursor: pointer;
 }
 
