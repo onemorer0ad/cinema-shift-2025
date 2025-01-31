@@ -1,13 +1,10 @@
 import React from 'react';
 import styles from './Navigation.module.scss';
-import ProfileSvg from '@common/ProfileSvg/ProfileSvg';
-import TicketsSvg from '@common/TicketsSvg/TicketsSvg';
-import ShiftCinemaSvg from '@common/LogoSvg/ShiftCinemaSvg';
-import LogoRightSvg from '@common/LogoSvg/LogoRightSvg';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { ROUTES } from '@utils/constants';
 import Button from '@common/Button/Button';
 import { useAuth } from '@utils/contexts/auth/AuthContext';
+import { ShiftCinemaSvg, LogoRightSvg, ProfileSvg, TicketsSvg } from '@common';
 
 const Navigation = () => {
   const { isAuthenticated, logout } = useAuth();
