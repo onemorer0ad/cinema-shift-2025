@@ -1,8 +1,8 @@
 .navigation {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 22px 240px;
-  gap: 32px;
   background-color: $BGPrimary;
   margin: 0 auto;
   border-bottom: 1px solid #ced2da;
@@ -12,10 +12,24 @@
     object-fit: contain;
   }
 
+  .leftSection {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .rightSection {
+    button {
+      max-width: 120px;
+      padding: 12px 24px;
+    }
+  }
+
   &_item {
     display: flex;
     align-items: center;
     gap: 1rem;
+    cursor: pointer;
   }
 }
 
@@ -31,15 +45,23 @@
     width: 100%;
     position: fixed;
     bottom: 0;
-    gap: 0;
-    justify-content: space-between;
-    box-sizing: border-box;
+
+    .leftSection {
+      gap: 0;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .rightSection {
+      display: none; // Скрываем кнопку входа на мобильных устройствах
+    }
 
     &_item {
       flex-direction: column;
-    }
-    &_item:first-child {
-      display: none;
+
+      &:first-child {
+        display: none;
+      }
     }
   }
 }

@@ -1,6 +1,6 @@
 import { createContext, useState, ReactNode, useContext, React } from 'react';
 
-interface SuccessPaymentProps {
+export interface SuccessPaymentProps {
   success: boolean;
   reason: string;
   order: {
@@ -29,7 +29,7 @@ interface SuccessPaymentProps {
   };
 }
 
-interface SuccessContextType {
+export interface SuccessContextType {
   successPayment: SuccessPaymentProps;
   setSuccessPayment: (data: SuccessPaymentProps) => void;
 }
