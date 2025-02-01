@@ -18,6 +18,7 @@ import {
 } from '@utils/contexts/store/FormDataContext';
 import { useSelectedSeatContext } from '@utils/contexts/store/SelectedSeatsContext';
 import { useSeance } from '@utils/contexts/store/SeanceContext';
+import BackButton from '@common/BackButton/BackButton';
 
 const loginLabelNames = [
   'lastName',
@@ -55,23 +56,34 @@ const IdentifyFormCinema = () => {
   };
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit(onSubmitHandler)}>
-      <h1 className={styles.title}>Введите ваши данные</h1>
-      {loginLabelNames.map((name) => (
-        <Input
-          key={name}
-          placeholder={name}
-          register={register}
-          name={name}
-          errors={errors}
-          required
-          //   disabled={isPending}
-        />
-      ))}
-      <div className="mt-8">
-        <Button type="submit">Продолжить</Button>
-      </div>
-    </form>
+    <div className={styles.container}>
+      <form className={styles.form} onSubmit={handleSubmit(onSubmitHandler)}>
+        <h1 className={styles.title}>Введите ваши данные</h1>
+        {loginLabelNames.map((name) => (
+          <Input
+            key={name}
+            placeholder={name}
+            register={register}
+            name={name}
+            errors={errors}
+            required
+            //   disabled={isPending}
+          />
+        ))}
+        <div className="mt-8">
+          <Button
+            navigate={-1}
+            type="submit"
+            className={`${styles.customButton} ${styles.backButton}`}
+          >
+            Назад
+          </Button>
+          <Button type="submit" className={styles.customButton}>
+            Продолжить
+          </Button>
+        </div>
+      </form>
+    </div>
   );
 };
 
