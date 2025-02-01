@@ -25,16 +25,21 @@ interface scheduleQueryDataProps {
 const Schedule = ({ scheduleQueryData, filmId }: scheduleQueryDataProps) => {
   const [activeDayIndex, setActiveDayIndex] = useState(0);
   const [activeDay, setActiveDay] = useState('');
-  const [activeTime, setActiveTime] = useState(null);
+  const [activeTime, setActiveTime] = useState<{
+    time: string;
+    hall: string;
+  } | null>(null);
   const navigate = useNavigate();
   const { seanceInfo, setSeanceInfo } = useSeance();
+  console.log(seanceInfo);
 
   const selectedDaySchedule = scheduleQueryData.find(
     (_, id) => id === activeDayIndex
   );
 
   const selectedHallAndTime = selectedDaySchedule!.seances.find(
-    (elem) => elem.time == activeTime
+    (elem) =>
+      elem.time === activeTime?.time && elem.hall.name === activeTime?.hall
   );
 
   // Группируем сеансы по залам
@@ -86,23 +91,22 @@ const Schedule = ({ scheduleQueryData, filmId }: scheduleQueryDataProps) => {
           <div key={hallName} className={styles.hall_block}>
             <h3>{hallName}</h3>
             <div className={styles.seances_list}>
-              {seances.map((seance, id) => {
-                return (
-                  <div
-                    key={id}
-                    onClick={() => {
-                      setActiveTime(seance.time);
-                    }}
-                    className={
-                      seance.time == activeTime
-                        ? `${styles.seance_time} ${styles.time_active}`
-                        : styles.seance_time
-                    }
-                  >
-                    {seance.time}
-                  </div>
-                );
-              })}
+              {seances.map((seance, id) => (
+                <div
+                  key={id}
+                  onClick={() => {
+                    setActiveTime({ time: seance.time, hall: hallName });
+                  }}
+                  className={
+                    activeTime?.time === seance.time &&
+                    activeTime?.hall === hallName
+                      ? `${styles.seance_time} ${styles.time_active}`
+                      : styles.seance_time
+                  }
+                >
+                  {seance.time}
+                </div>
+              ))}
             </div>
           </div>
         ))}

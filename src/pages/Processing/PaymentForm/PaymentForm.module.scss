@@ -59,13 +59,17 @@ h2 {
   margin-top: 16px;
 }
 
+.customButton {
+  width: calc(50% - 8px);
+  &:not(:last-child) {
+    margin-right: 15px;
+  }
+}
+
 .backButton {
-  padding: 10px 20px;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
-  background-color: #ffffff;
-  color: #000;
-  cursor: pointer;
+  color: $TextSecondary;
+  background-color: $BGPrimary;
+  border: 1px solid $BorderLight;
 }
 
 .payButton {

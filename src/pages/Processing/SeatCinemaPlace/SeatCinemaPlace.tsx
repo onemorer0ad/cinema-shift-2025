@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Tooltip from '@common/Tooltip/Tooltip';
 import { useSelectedSeatContext } from '@utils/contexts/store/SelectedSeatsContext';
 import { useSeance } from '@utils/contexts/store/SeanceContext';
+import BackButton from '@common/BackButton/BackButton';
 
 const SeatCinemaPlace = () => {
   const [selectedSeats, setSelectedSeats] = useState<

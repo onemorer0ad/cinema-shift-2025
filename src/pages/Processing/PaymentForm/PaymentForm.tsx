@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@utils/constants';
 import { usePayment } from '@utils/contexts/store/SuccessPaymentContext';
 import { SuccessContextType } from 'utils/contexts/store/SuccessPaymentContext';
+import BackButton from '@common/BackButton/BackButton';
 
 const validationSchema = Yup.object().shape({
   cardNumber: Yup.string().test(
@@ -142,13 +143,17 @@ const PaymentForm = () => {
           </div>
         </div>
         <div className={styles.buttonGroup}>
-          <Button type="button" className={styles.backButton}>
+          <Button
+            navigate={-1}
+            type="button"
+            className={`${styles.backButton} ${styles.customButton}`}
+          >
             Назад
           </Button>
           <Button
             disabled={isPending}
             type="submit"
-            className={styles.payButton}
+            className={styles.customButton}
           >
             Оплатить
           </Button>

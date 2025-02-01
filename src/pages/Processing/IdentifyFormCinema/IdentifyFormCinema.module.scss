@@ -53,3 +53,16 @@
   border: 1px solid #ccc;
   color: #333;
 }
+
+.customButton {
+  width: calc(50% - 8px);
+  &:not(:last-child) {
+    margin-right: 15px;
+  }
+}
+
+.backButton {
+  color: $TextSecondary;
+  background-color: $BGPrimary;
+  border: 1px solid $BorderLight;
+}
